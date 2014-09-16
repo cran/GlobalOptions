@@ -1,0 +1,12 @@
+81d62c1e024d35b3eb5e88336de9450a *DESCRIPTION
+5cc622792d6c233fb43284a5d21fc49c *NAMESPACE
+b08d8a172a36baf0e535b2374f219639 *NEWS
+ce4843fabb84d35dc990a15d42f537ed *R/setGlobalOptions.R
+1dcf4fb498467db5e02936b7f7378280 *build/vignette.rds
+ca89b579bcab0b74cf819b9dd52c377a *inst/doc/GlobalOptions.R
+232160687377af61b573905531a87606 *inst/doc/GlobalOptions.Rnw
+bc0088910178263198e1eab4b5798d83 *inst/doc/GlobalOptions.pdf
+efbe770aa9ce340b865c044df803c6bb *inst/tests/test.R
+fd299bb17e550790db3e8d08bc38f603 *man/setGlobalOptions.rd
+a5b136f40aab7a711f559bc3e849edde *tests/test-all.R
+232160687377af61b573905531a87606 *vignettes/GlobalOptions.Rnw

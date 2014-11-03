@@ -1,11 +1,11 @@
-## ----eval = TRUE, echo = TRUE, include = TRUE----------------------------
+## ----eval = TRUE, echo = TRUE--------------------------------------------
 library(GlobalOptions)
 foo.options = setGlobalOptions(
     a = 1,
     b = "text"
 )
 
-## ----eval = TRUE, echo = TRUE, include = TRUE----------------------------
+## ------------------------------------------------------------------------
 foo.options()
 foo.options("a")
 op = foo.options()
@@ -15,19 +15,19 @@ foo.options()
 foo.options(op)
 foo.options()
 
-## ----eval = TRUE, echo = TRUE, include = TRUE----------------------------
+## ------------------------------------------------------------------------
 foo.options(a = 2, b = "new text")
 foo.options(RESET = TRUE)
 foo.options()
 
-## ----eval = TRUE, echo = TRUE, include = TRUE----------------------------
+## ------------------------------------------------------------------------
 foo.options = setGlobalOptions(
     a = list(.value = 1,
              .length = c(1, 3),
              .class = "numeric")
 )
 
-## ----eval = TRUE, echo = TRUE, include = TRUE----------------------------
+## ------------------------------------------------------------------------
 foo.options = setGlobalOptions(
     a = list(.value = 1,
              .read.only = TRUE),
@@ -37,7 +37,7 @@ foo.options()
 foo.options(READ.ONLY = TRUE)
 foo.options(READ.ONLY = FALSE)
 
-## ----eval = TRUE, echo = TRUE, include = TRUE----------------------------
+## ------------------------------------------------------------------------
 foo.options = setGlobalOptions(
     verbose = 
         list(.value = TRUE,
@@ -55,7 +55,7 @@ foo.options(verbose = FALSE); foo.options("verbose")
 foo.options(verbose = NA); foo.options("verbose")
 foo.options(verbose = NULL); foo.options("verbose")
 
-## ----eval = TRUE, echo = TRUE, include = TRUE----------------------------
+## ------------------------------------------------------------------------
 foo.options = setGlobalOptions(
     prefix = ""
 )
@@ -64,7 +64,7 @@ foo.options("prefix")
 Sys.sleep(2)
 foo.options("prefix")
 
-## ----eval = TRUE, echo = TRUE, include = TRUE----------------------------
+## ------------------------------------------------------------------------
 foo.options = setGlobalOptions(
     test = list(.value = function(x1, x2) t.test(x1, x2)$p.value,
                 .class = "function")
@@ -72,7 +72,7 @@ foo.options = setGlobalOptions(
 foo.options(test = function(x1, x2) cor.test(x1, x2)$p.value)
 foo.options("test")
 
-## ----eval = TRUE, echo = TRUE, include = TRUE----------------------------
+## ------------------------------------------------------------------------
 foo.options = setGlobalOptions(
     a = list(.value = 1),
     b = list(.value = function() 2 * OPT$a)
@@ -81,7 +81,7 @@ foo.options("b")
 foo.options(a = 2)
 foo.options("b")
 
-## ----eval = TRUE, echo = TRUE, include = TRUE----------------------------
+## ------------------------------------------------------------------------
 foo.options = setGlobalOptions(
 	a = list(.value = 1,
 	         .visible = FALSE),
@@ -92,10 +92,10 @@ foo.options("a")
 foo.options(a = 2)
 foo.options("a")
 
-## ----eval = TRUE, echo = TRUE, include = TRUE----------------------------
+## ------------------------------------------------------------------------
 args(foo.options)
 
-## ----eval = TRUE, echo = TRUE, include = TRUE----------------------------
+## ------------------------------------------------------------------------
 foo.options1 = setGlobalOptions(
     a = list(.value = 1)
 )

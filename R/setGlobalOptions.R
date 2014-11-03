@@ -190,7 +190,8 @@ setGlobalOptions = function(...) {
 				} else if(is.function(x$value) && length(intersect(x$class, "function")) == 0) {
 					value_fun = x$value
 					value_fun = insertEnvBefore(value_fun, OPT_env)
-					tryCatch({ OPT[[i]] = value_fun() },
+					tryCatch({ OPT[[i]] = value_fun();
+					           attr(OPT[[i]], "FUN") = value_fun},
 						finally = deleteEnvBefore(value_fun))
 				} else {
 					OPT[[i]] = x$value
@@ -361,7 +362,10 @@ setGlobalOptions = function(...) {
 				
 				# user's value
 				value = args[[ name[i] ]]
-
+				
+				if(!is.null(attr(value, "FUN"))) {
+					value = attr(value, "FUN")
+				}
 				if(is.function(value) && length(intersect(class, "function")) == 0) {
 					value_fun = value
 					value_fun = insertEnvBefore(value_fun, OPT_env)
@@ -378,7 +382,7 @@ setGlobalOptions = function(...) {
 
 				# test on classes of the values
 				if(!is.null(class)) {
-					if(!any(sapply(class, function(cl) is(value, cl)))) {
+					if(!any(sapply(class, function(cl) inherits(value, cl)))) {
 						stop(paste("Class of '", name[i], "' should be one of '", paste(class, collapse = ", "), "'.\n", sep = ""))
 					}
 				}
@@ -413,6 +417,7 @@ setGlobalOptions = function(...) {
 				# finally, all values are correct
 				if(exists("value_fun")) {
 					options2[[ name[i] ]][["value"]] = value_fun
+					rm(value_fun)
 				} else {
 					options2[[ name[i] ]][["value"]] = value
 				}

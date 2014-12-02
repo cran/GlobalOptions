@@ -1,11 +1,11 @@
-baee4349d0250391729793607ea0ec66 *DESCRIPTION
+d56ba5090ac9bf636bd5db78244f2316 *DESCRIPTION
 191902c3ae87bb98b3577b55c9ef3320 *NAMESPACE
-e427ae0f62c8a76f6f59a560338f9419 *NEWS
-f78180a916a9a62f5214177094883b71 *R/setGlobalOptions.R
-1dcf4fb498467db5e02936b7f7378280 *build/vignette.rds
+8edf741611fdf4b7fb66dd9d724b0bbe *NEWS
+c2d777794a54dd5e1d27ed8097dc636c *R/setGlobalOptions.R
+ab8bbb4a3a7f750bdf2010d25348c397 *build/vignette.rds
 5a6427efcdc5d62b6c6d8095d01b926b *inst/doc/GlobalOptions.R
 a4bdd41c6708aeadf5b98b95c4f72050 *inst/doc/GlobalOptions.Rnw
-c5ed8d797f6eaa4dd742cd11a279ae0a *inst/doc/GlobalOptions.pdf
+8972750bbf86819d81aaf3784f23df92 *inst/doc/GlobalOptions.pdf
 e32c0268ae0979c5cb26f6b281e86c2e *inst/tests/package1
 1d0e198c1ac48ac19562f1b128508920 *inst/tests/package2
 b9cb8a0b718dc902508d41ed019e19d7 *inst/tests/test.R

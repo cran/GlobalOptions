@@ -73,10 +73,14 @@ foo.options(test = function(x1, x2) cor.test(x1, x2)$p.value)
 foo.options("test")
 
 ## ------------------------------------------------------------------------
-foo.options = setGlobalOptions(
+lt = setGlobalOptions(
     a = list(.value = 1),
-    b = list(.value = function() 2 * OPT$a)
+    b = list(.value = function() 2 * get_opt_value('a')),
+    get_opt_value_fun = TRUE
 )
+foo.options = lt$opt_fun
+get_opt_value = lt$get_opt_value # function name should be same as in above
+
 foo.options("b")
 foo.options(a = 2)
 foo.options("b")

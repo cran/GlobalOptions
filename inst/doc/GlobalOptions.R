@@ -8,9 +8,12 @@ foo.options = setGlobalOptions(
 ## ------------------------------------------------------------------------
 foo.options()
 foo.options("a")
+foo.options$a
 op = foo.options()
 op
 foo.options(a = 2, b = "new text")
+foo.options()
+foo.options$b = ""
 foo.options()
 foo.options(op)
 foo.options()

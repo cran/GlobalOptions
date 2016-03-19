@@ -1,47 +1,61 @@
-## ----eval = TRUE, echo = TRUE--------------------------------------------
+## ---- echo = FALSE, message = FALSE---------------------------------------------------------------
+library(markdown)
+options(markdown.HTML.options = c(options('markdown.HTML.options')[[1]], "toc"))
+
+library(knitr)
+knitr::opts_chunk$set(
+    error = FALSE,
+    tidy  = FALSE,
+    message = FALSE,
+    fig.align = "center")
+options(markdown.HTML.stylesheet = "custom.css")
+
+options(width = 100)
+
+## -------------------------------------------------------------------------------------------------
 library(GlobalOptions)
-foo.options = setGlobalOptions(
+opt = setGlobalOptions(
     a = 1,
     b = "text"
 )
 
-## ------------------------------------------------------------------------
-foo.options()
-foo.options("a")
-foo.options$a
-op = foo.options()
+## -------------------------------------------------------------------------------------------------
+opt()
+opt("a")
+opt$a
+op = opt()
 op
-foo.options(a = 2, b = "new text")
-foo.options()
-foo.options$b = ""
-foo.options()
-foo.options(op)
-foo.options()
+opt(a = 2, b = "new text")
+opt()
+opt$b = ""
+opt()
+opt(op)
+opt()
 
-## ------------------------------------------------------------------------
-foo.options(a = 2, b = "new text")
-foo.options(RESET = TRUE)
-foo.options()
+## -------------------------------------------------------------------------------------------------
+opt(a = 2, b = "new text")
+opt(RESET = TRUE)
+opt()
 
-## ------------------------------------------------------------------------
-foo.options = setGlobalOptions(
+## -------------------------------------------------------------------------------------------------
+opt = setGlobalOptions(
     a = list(.value = 1,
              .length = c(1, 3),
              .class = "numeric")
 )
 
-## ------------------------------------------------------------------------
-foo.options = setGlobalOptions(
+## -------------------------------------------------------------------------------------------------
+opt = setGlobalOptions(
     a = list(.value = 1,
              .read.only = TRUE),
     b = 2
 )
-foo.options()
-foo.options(READ.ONLY = TRUE)
-foo.options(READ.ONLY = FALSE)
+opt(READ.ONLY = TRUE)
+opt(READ.ONLY = FALSE)
+opt(READ.ONLY = NULL)  # default, means return both
 
-## ------------------------------------------------------------------------
-foo.options = setGlobalOptions(
+## -------------------------------------------------------------------------------------------------
+opt = setGlobalOptions(
     verbose = 
         list(.value = TRUE,
              .filter = function(x) {
@@ -54,62 +68,137 @@ foo.options = setGlobalOptions(
                  }
               })
 )
-foo.options(verbose = FALSE); foo.options("verbose")
-foo.options(verbose = NA); foo.options("verbose")
-foo.options(verbose = NULL); foo.options("verbose")
+opt(verbose = FALSE); opt("verbose")
+opt(verbose = NA); opt("verbose")
+opt(verbose = NULL); opt("verbose")
 
-## ------------------------------------------------------------------------
-foo.options = setGlobalOptions(
+## -------------------------------------------------------------------------------------------------
+opt = setGlobalOptions(
+    margin = 
+        list(.value = c(1, 1, 1, 1),
+             .length = c(1, 2, 4),
+             .filter = function(x) {
+                if(length(x) == 1) {
+                    return(rep(x, 4))
+                } else if(length(x) == 2) {
+                    return(rep(x, 2))
+                } else {
+                    return(x)
+                }
+            })
+)
+opt(margin = 2); opt("margin")
+opt(margin = c(2, 4)); opt("margin")
+
+## -------------------------------------------------------------------------------------------------
+opt = setGlobalOptions(
     prefix = ""
 )
-foo.options(prefix = function() paste("[", Sys.time(), "] ", sep = " "))
-foo.options("prefix")
+opt(prefix = function() paste("[", Sys.time(), "] ", sep = " "))
+opt("prefix")
 Sys.sleep(2)
-foo.options("prefix")
+opt("prefix")
 
-## ------------------------------------------------------------------------
-foo.options = setGlobalOptions(
-    test = list(.value = function(x1, x2) t.test(x1, x2)$p.value,
-                .class = "function")
+## -------------------------------------------------------------------------------------------------
+opt = setGlobalOptions(
+    test_fun = list(.value = function(x1, x2) t.test(x1, x2)$p.value,
+                    .class = "function")
 )
-foo.options(test = function(x1, x2) cor.test(x1, x2)$p.value)
-foo.options("test")
+opt(test_fun = function(x1, x2) cor.test(x1, x2)$p.value)
+opt("test_fun")
 
-## ------------------------------------------------------------------------
+## -------------------------------------------------------------------------------------------------
 lt = setGlobalOptions(
     a = list(.value = 1),
     b = list(.value = function() 2 * get_opt_value('a')),
     get_opt_value_fun = TRUE
 )
-foo.options = lt$opt_fun
-get_opt_value = lt$get_opt_value # function name should be same as in above
+opt = lt$opt_fun
+# the variable name here should be same as the one in above
+get_opt_value = lt$get_opt_value
 
-foo.options("b")
-foo.options(a = 2)
-foo.options("b")
+opt("b")
+opt(a = 2)
+opt("b")
+opt(a = 2, b = 3)
+opt()
 
-## ------------------------------------------------------------------------
-foo.options = setGlobalOptions(
+## -------------------------------------------------------------------------------------------------
+opt = setGlobalOptions(
+    a = 1
+)
+
+opt(LOCAL = TRUE)
+opt(a = 2)
+opt("a")
+opt(LOCAL = FALSE)
+opt("a")
+
+## -------------------------------------------------------------------------------------------------
+opt = setGlobalOptions(
+    a = 1
+)
+
+f1 = function() {
+    opt(LOCAL = TRUE)
+    opt(a = 2)
+    return(opt("a"))
+}
+f1()
+opt$a
+
+f2 = function() {
+    opt(LOCAL = TRUE)
+    opt(a = 4)
+    return(opt("a"))
+}
+f2()
+opt$a
+
+## -------------------------------------------------------------------------------------------------
+opt = setGlobalOptions(
+    a = 1
+)
+
+f1 = function() {
+    opt(LOCAL = TRUE)
+    opt(a = 2)
+    return(f2())
+}
+
+f2 = function() {
+    opt("a")
+}
+
+f1()
+opt("a")
+
+## -------------------------------------------------------------------------------------------------
+opt = setGlobalOptions(
 	a = list(.value = 1,
 	         .visible = FALSE),
 	b = 2
 )
-foo.options()
-foo.options("a")
-foo.options(a = 2)
-foo.options("a")
+opt()
+opt("a")
+opt(a = 2)
+opt("a")
+opt()
 
-## ------------------------------------------------------------------------
-args(foo.options)
+## -------------------------------------------------------------------------------------------------
+args(opt)
 
-## ------------------------------------------------------------------------
-foo.options1 = setGlobalOptions(
+## -------------------------------------------------------------------------------------------------
+opt1 = setGlobalOptions(
     a = list(.value = 1)
 )
-foo.options2 = setGlobalOptions(
+opt2 = setGlobalOptions(
     a = list(.value = 1)
 )
-foo.options1(a = 2)
-foo.options1("a")
-foo.options2("a")
+opt1(a = 2)
+opt1("a")
+opt2("a")
+
+## -------------------------------------------------------------------------------------------------
+sessionInfo()
 

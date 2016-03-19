@@ -16,3 +16,14 @@ Set option value by dollar symbol
   \item{value}{the value which is assigned to the option}
 
 }
+\details{
+\code{opt\$a = 1} is same as \code{opt("a" = 1)}
+}
+\author{
+Zuguang Gu <z.gu@dkfz.de>
+}
+\examples{
+# There is no example
+NULL
+
+}

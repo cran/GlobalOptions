@@ -1,3 +1,11 @@
+Changes in version 0.0.11
+
+* improved docs
+* opt$nm can be set to NULL now
+* `failed_msg` are wrapped
+
+---------------------------------------------------------------------------
+
 Changes in version 0.0.10
 
 * `$<-GlobalOptionsFun` are now invoked in right environment

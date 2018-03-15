@@ -271,12 +271,17 @@ hr {
 </li>
 <li>
 <a href="#toc_10">Features for package development</a>
+<ul>
+<li>
+<a href="#toc_11">Integrate options with interactions between them in a custom R-package</a>
+</li>
+</ul>
 </li>
 <li>
-<a href="#toc_11">Misc</a>
+<a href="#toc_12">Misc</a>
 </li>
 <li>
-<a href="#toc_12">Session info</a>
+<a href="#toc_13">Session info</a>
 </li>
 </ul>
 </li>
@@ -293,7 +298,7 @@ hr {
 
 <p><strong>Author</strong>: Zuguang Gu ( <a href="mailto:z.gu@dkfz.de">z.gu@dkfz.de</a> )</p>
 
-<p><strong>Date</strong>: 2017-05-20</p>
+<p><strong>Date</strong>: 2018-03-15</p>
 
 <hr/>
 
@@ -601,14 +606,14 @@ opt(prefix = function() paste(&quot;[&quot;, Sys.time(), &quot;] &quot;, sep = &
 opt(&quot;prefix&quot;)
 </code></pre>
 
-<pre><code>## [1] &quot;[ 2017-05-20 09:37:43 ] &quot;
+<pre><code>## [1] &quot;[ 2018-03-15 18:33:31 ] &quot;
 </code></pre>
 
 <pre><code class="r">Sys.sleep(2)
 opt(&quot;prefix&quot;)
 </code></pre>
 
-<pre><code>## [1] &quot;[ 2017-05-20 09:37:45 ] &quot;
+<pre><code>## [1] &quot;[ 2018-03-15 18:33:33 ] &quot;
 </code></pre>
 
 <p>If the value of the option is a real function and users don&#39;t want to execute it,
@@ -876,7 +881,52 @@ package, remember to document all the four arguments:</p>
 if you want users to access the options by the <code>$</code> and <code>$&lt;-</code> operator. If not, they can 
 only access the options by the normal <code>opt(name)</code> and <code>opt(name = value)</code> way.</p>
 
-<h2 id="toc_11">Misc</h2>
+<h3 id="toc_11">Integrate options with interactions between them in a custom R-package</h3>
+
+<p>If you create a package using roxygen2, here is the proposition.</p>
+
+<ol>
+<li>To be able to call the option as a modifiable list (<code>opt$a</code>), you need to add <code>GlobalOptions</code> in <code>Depends</code> in your DESCRIPTION file, so that it is attached when loading your package. </li>
+<li>The R file describing the functions should be the following one. Note that this applies only if you use <code>get_opt_value_fun = TRUE</code>, otherwise, function <code>lt$get_opt_value</code> will not exist.</li>
+</ol>
+
+<pre><code>#&#39; Internal function for global options
+#&#39; @keywords internal
+#&#39; @seealso \code{\link{opt}}
+lt &lt;- GlobalOptions::setGlobalOptions(
+    a = list(.value = 1),
+    b = list(.value = function() 2 * get_opt_value(&#39;a&#39;)),
+    get_opt_value_fun = TRUE
+)
+
+#&#39; Internal function for global options
+#&#39; @keywords internal
+#&#39; @seealso \code{\link{opt}}
+get_opt_value &lt;- lt$get_opt_value
+
+#&#39; Global options for my package
+#&#39;
+#&#39; @param RESET reset options to default
+#&#39; @param LOCAL set to true to use modified options in a local environment but not in global.
+#&#39; @param a Numeric. Default to 1.
+#&#39; @param b Numeric. Default to 2*a.
+#&#39;
+#&#39; @return A list with all options
+#&#39; @export
+#&#39;
+#&#39; @examples
+#&#39; \dontrun{
+#&#39; # List options
+#&#39; opt()
+#&#39; # Show one option
+#&#39; opt(&quot;b&quot;)
+#&#39; # Modify model type
+#&#39; opt$a &lt;- 2; opt(&quot;b&quot;)
+#&#39; }
+opt &lt;- lt$opt_fun
+</code></pre>
+
+<h2 id="toc_12">Misc</h2>
 
 <p>The order of validation when modifying an option value is <code>.read.only</code>, <code>.private</code>, 
 <code>.length</code>, <code>.class</code>, <code>.validate</code>, <code>.filter</code>, <code>.length</code>, <code>.class</code>.
@@ -948,26 +998,26 @@ opt()
 <code>.filter</code> will not be applied on default values because 
 users who design their option functions should know whether the default values are valid or not.</p>
 
-<h2 id="toc_12">Session info</h2>
+<h2 id="toc_13">Session info</h2>
 
 <pre><code class="r">sessionInfo()
 </code></pre>
 
 <pre><code>## R version 3.3.2 (2016-10-31)
 ## Platform: x86_64-apple-darwin13.4.0 (64-bit)
-## Running under: macOS Sierra 10.12.3
+## Running under: macOS  10.13.2
 ## 
 ## locale:
-## [1] C/en_US.UTF-8/C/C/C/C
+## [1] C/en_GB.UTF-8/en_GB.UTF-8/C/en_GB.UTF-8/en_GB.UTF-8
 ## 
 ## attached base packages:
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] GlobalOptions_0.0.12 knitr_1.15.16        markdown_0.7.7      
+## [1] GlobalOptions_0.0.13 knitr_1.20           markdown_0.8        
 ## 
 ## loaded via a namespace (and not attached):
-## [1] magrittr_1.5  tools_3.3.2   stringi_1.1.2 stringr_1.2.0 evaluate_0.10
+## [1] magrittr_1.5    tools_3.3.2     stringi_1.1.6   stringr_1.3.0   evaluate_0.10.1
 </code></pre>
 
 </body>

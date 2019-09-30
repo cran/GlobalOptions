@@ -451,6 +451,8 @@ opt
 opt$c = 1
 ```
 
+Of course you can put more than one options in `opt()` when adding them.
+
 ## Features for package development
 
 Two additional fields may be helpful when developing packages. `.visible`

@@ -302,7 +302,7 @@ hr {
 
 <p><strong>Author</strong>: Zuguang Gu ( <a href="mailto:z.gu@dkfz.de">z.gu@dkfz.de</a> )</p>
 
-<p><strong>Date</strong>: 2018-06-06</p>
+<p><strong>Date</strong>: 2019-09-30</p>
 
 <hr/>
 
@@ -628,14 +628,14 @@ opt(prefix = function() paste(&quot;[&quot;, Sys.time(), &quot;] &quot;, sep = &
 opt(&quot;prefix&quot;)  # or opt$prefix
 </code></pre>
 
-<pre><code>## [1] &quot;[ 2018-06-06 10:28:51 ] &quot;
+<pre><code>## [1] &quot;[ 2019-09-30 20:04:46 ] &quot;
 </code></pre>
 
 <pre><code class="r">Sys.sleep(2)
 opt(&quot;prefix&quot;)
 </code></pre>
 
-<pre><code>## [1] &quot;[ 2018-06-06 10:28:53 ] &quot;
+<pre><code>## [1] &quot;[ 2019-09-30 20:04:48 ] &quot;
 </code></pre>
 
 <p>If the value of the option is a real function and users don&#39;t want to execute
@@ -981,6 +981,8 @@ opt
 <pre><code>## Error: Class of &#39;c&#39; should be &#39;character&#39;.
 </code></pre>
 
+<p>Of course you can put more than one options in <code>opt()</code> when adding them.</p>
+
 <h2 id="toc_13">Features for package development</h2>
 
 <p>Two additional fields may be helpful when developing packages. <code>.visible</code>
@@ -1188,13 +1190,13 @@ opt$a
 <pre><code class="r">sessionInfo()
 </code></pre>
 
-<pre><code>## R version 3.4.4 (2018-03-15)
+<pre><code>## R version 3.6.1 (2019-07-05)
 ## Platform: x86_64-apple-darwin15.6.0 (64-bit)
-## Running under: macOS High Sierra 10.13.2
+## Running under: macOS Mojave 10.14.2
 ## 
 ## Matrix products: default
-## BLAS: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRblas.0.dylib
-## LAPACK: /Library/Frameworks/R.framework/Versions/3.4/Resources/lib/libRlapack.dylib
+## BLAS:   /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRblas.0.dylib
+## LAPACK: /Library/Frameworks/R.framework/Versions/3.6/Resources/lib/libRlapack.dylib
 ## 
 ## locale:
 ## [1] C/en_GB.UTF-8/en_GB.UTF-8/C/en_GB.UTF-8/en_GB.UTF-8
@@ -1203,10 +1205,11 @@ opt$a
 ## [1] stats     graphics  grDevices utils     datasets  methods   base     
 ## 
 ## other attached packages:
-## [1] GlobalOptions_0.1.0 knitr_1.20          markdown_0.8       
+## [1] GlobalOptions_0.1.1 knitr_1.25          markdown_1.1       
 ## 
 ## loaded via a namespace (and not attached):
-## [1] compiler_3.4.4  magrittr_1.5    tools_3.4.4     stringi_1.2.2   stringr_1.3.1   evaluate_0.10.1
+## [1] compiler_3.6.1 magrittr_1.5   tools_3.6.1    stringi_1.4.3  stringr_1.4.0  xfun_0.9      
+## [7] evaluate_0.14
 </code></pre>
 
 </body>

@@ -61,7 +61,12 @@
 # Zuguang Gu <z.gu@dkfz.de>
 #
 # == example
-# # please go to the vignette
+# opt = set_opt(
+#     a = 1,
+#     b = "text"
+# )
+# opt
+# # for more examples, please go to the vignette
 setGlobalOptions = function(...) {
 
 	# the environment where the function is called
@@ -329,28 +334,46 @@ setGlobalOptions = function(...) {
 # z.gu@dkfz.de
 #
 print.GlobalOptionsFun = function(x, ...) {
+	
 	lt = x()
 	options = get("options", envir = environment(x))
 	options = options[names(lt)]
 
-	df = data.frame("Option" = names(options), 
-		"Value" = sapply(options, function(opt) value2text(opt$real_value, width = Inf)),
-		"Description" = sapply(options, function(opt) value2text(opt$description, width = Inf)),
-		check.names = FALSE,
-		stringsAsFactors = FALSE)
-	if(all(df$Description == "\"\"")) {
-		df$Description = NULL
-	}
-	max_nchar = sapply(df, function(x) max(nchar(x)))
-	max_nchar = pmax(max_nchar, nchar(colnames(df)))
+	option = names(options)
+	value = sapply(options, function(opt) value2text(opt$real_value, width = Inf))
+	description = sapply(options, function(opt) opt$description)
 
-	if(sum(max_nchar) + length(max_nchar) <= getOption("width")) {
-		print(df, row.names = FALSE)
-	} else {
-		df = lapply(df, function(x) sapply(x, function(y) toString(y, width = round(getOption("width")/ncol(df)))))
-		df = do.call("data.frame", df)
-		print(df, row.names = FALSE)
+	option_max_width = max(nchar(c("Option", option)))
+	value_max_width = max(nchar(c("Value", value)))
+	desc_max_width = max(nchar(description))
+
+	cat(" ", "Option", strrep(" ", option_max_width - 6), sep = "")
+	cat(" ", "Value", strrep(" ", value_max_width - 5), sep = "")
+	cat("\n")
+
+	cat(" ", strrep("-", option_max_width), sep = "")
+	cat(":", strrep("-", min( max(value_max_width + 2, desc_max_width), getOption("width") - option_max_width  - 2)), sep = "")
+	cat("\n")
+
+	for(i in seq_along(option)) {
+		cat(" ", option[i], strrep(" ", option_max_width - nchar(option[i])), sep = "")
+		cat(" ", value[i], strrep(" ", value_max_width - nchar(value[i])), sep = "")
+		cat("\n")
+		if(description[i] != "") {
+			txt = paste0("(", description[i], ")")
+			txt = strwrap(txt, width = 0.9*getOption("width") - option_max_width + 1)
+			txt = paste(strrep(" ", option_max_width + 2), txt, sep = "")
+			txt = paste(txt, collapse = "\n")
+			cat(txt, sep = "")
+			cat("\n")
+		}
 	}
+	# cat(" ", strrep("-", option_max_width), sep = "")
+	# cat("-", strrep("-", min( max(value_max_width + 2, desc_max_width), getOption("width") - option_max_width  - 2)), sep = "")
+	# cat("\n")
+
+	# cat(" Use `", opt_nm, "$opt_name` or `", opt_nm, "[['opt_name']]` to retrieve the value.\n", sep = "")
+	# cat(" Use `", opt_nm, "$opt_name = value` or `", opt_nm, "[['opt_name']] = value` to set the value.\n", sep = "")
 }
 
 
@@ -466,6 +489,25 @@ dump_opt = function(opt, opt_name) {
 }
 
 # == title
+# Option names
+#
+# == param
+# -x the option object returned by `set_opt` or `setGlobalOptions`.
+#
+# == value
+# A vector of option names
+#
+# == example
+# opt = set_opt(
+#     a = 1,
+#     b = "text"
+# )
+# names(opt)
+names.GlobalOptionsFun = function(x) {
+	names(x())
+}
+
+# == title
 # The .DollarNames method for the GlobalOptionsFun class
 #
 # == param
@@ -480,8 +522,8 @@ dump_opt = function(opt, opt_name) {
 # z.gu@dkfz.de
 #
 .DollarNames.GlobalOptionsFun = function(x, pattern = "") {
-	options = get("options", envir = environment(x))
-	names(options)
+	lt = x()
+	names(lt)
 }
 
 # == title
